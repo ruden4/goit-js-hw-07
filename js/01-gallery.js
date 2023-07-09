@@ -22,9 +22,30 @@ const newGalleryMarkup = galleryItems
 galleryListEl.insertAdjacentHTML("beforeend", newGalleryMarkup);
 
 galleryListEl.addEventListener("click", onImageClick);
+
 function onImageClick(event) {
+  if (event.target.nodeName !== "IMG") return;
   event.preventDefault();
 
-  if (event.target.nodeName !== "IMG") return;
-  console.log(event);
+  const instance = basicLightbox.create(
+    `
+	<img width="1400" height="900" src="${event.target.dataset.source}">
+`,
+    {
+      onShow: () => {
+        document.addEventListener("keydown", closeModal);
+      },
+      onClose: () => {
+        document.removeEventListener("keydown", closeModal);
+      },
+    }
+  );
+  instance.show();
+
+  function closeModal(event) {
+    if (event.code !== "Escape") {
+      return;
+    }
+    instance.close();
+  }
 }
