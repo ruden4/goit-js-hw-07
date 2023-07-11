@@ -24,11 +24,14 @@ const newGalleryMarkup = galleryItems
 
 galleryListEl.insertAdjacentHTML("beforeend", newGalleryMarkup);
 
-// galleryListEl.addEventListener("click", onImageClick);
+galleryListEl.addEventListener("click", onImageClick);
 
-// function onImageClick(event) {
-//   if (event.target.nodeName !== "IMG") return;
-//   event.preventDefault();
-// }
+function onImageClick(event) {
+  if (event.target.nodeName !== "IMG") return;
+  event.preventDefault();
+}
 
-const lightbox = new SimpleLightbox(".gallery a");
+const lightbox = new SimpleLightbox(".gallery a", {
+    captionsData: "alt",
+    captionDelay: 250,
+});
